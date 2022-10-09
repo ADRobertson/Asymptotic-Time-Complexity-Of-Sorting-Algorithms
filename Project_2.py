@@ -147,18 +147,20 @@ def timer():
 # Driver code to test above
 
 def main():
-    numElem = 100000
+    numElem = 10000
 
     #need 4 copies of a randomly generated array
+
+    #loop to generate n element array of random integers
+    arr = []
+    for x in range(numElem):
+        int = random.randint(0, 200)
+        arr.append(int)
     arrBubble = arr
     arrMerge = arr
     arrQuick = arr
     arrHeap = arr
-    #loop to generate n element array of random integers
-    arr = []
-    for x in range(100):
-        int = random.randint(0, 200)
-        arr.append(int)
+    #print(arrBubble)
     #-----------------------------------------------------------------------------
     #array to be sent to bubbleSort
     tbs0 = timer()
@@ -167,6 +169,7 @@ def main():
     #print("\nBubble Sorted Array:", arrBubble)
     bubbleTime = tbs - tbs0
     print("Sorting time for Bubble Sort:", bubbleTime, "seconds")
+    #print(arrMerge)
     #-----------------------------------------------------------------------------
     tm0 = timer()
     arrMerge = merge_sort(arrMerge)

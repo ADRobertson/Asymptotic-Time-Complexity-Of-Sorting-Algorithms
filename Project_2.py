@@ -151,6 +151,29 @@ def copyArray(arr):
         returnArray.append(x)
     return returnArray
 
+def SortTimer(arr, sortRequested):
+    if (sortRequested == "Bubble"):
+        t0 = timer()
+        arr = bubble_sort(arr)
+        t = timer()
+        time = t-t0
+    if (sortRequested == "Merge"):
+        t0 = timer()
+        arr = merge_sort(arr)
+        t = timer()
+        time = t-t0
+    if (sortRequested == "Quick"):
+        t0 = timer()
+        arr = quickSort(arr, 0, len(arr) - 1)
+        t = timer()
+        time = t-t0
+    if (sortRequested == "Heap"):
+        t0 = timer()
+        arr = heapSort(arr)
+        t = timer()
+        time = t-t0
+    return time
+
 # Driver code to test above
 
 def main(numElements):
@@ -163,66 +186,87 @@ def main(numElements):
         int = random.randint(0, 200)
         arr.append(int)
 
+    #lists for storing runtimes for average, best, worst cases
+        #index 0 = average, 1 = best, 2 = worst
+    bubbleTimes = []
+    mergeTimes = []
+    quickTimes = []
+    heapTimes = []
+
+
     #need function to automatically copy array wihout being pointers
+        #these are average cases for all, scrambled arrays
     arrBubble = copyArray(arr)
     arrMerge = copyArray(arr)
     arrQuick = copyArray(arr)
     arrHeap = copyArray(arr)
-    #print(arrBubble)
-    #-----------------------------------------------------------------------------
-    #array to be sent to bubbleSort
-    tbs0 = timer()
-    arrBubble = bubble_sort(arr)
-    tbs = timer()
-    #print("\nBubble Sorted Array:", arrBubble)
-    bubbleTime = tbs - tbs0
-    print("Sorting time for Bubble Sort:", bubbleTime, "seconds")
-    #print("\n***BUBBLE SORTED ARRAY:", arrBubble, "***")
-    #print(arrMerge)
 
-    #to do list:
-        # average, best, worst case scanrios for sorts
-        # different number of elements
-        # fix quick sort, not really sure what's going on in that regard, will have to work through it tomorrow just to be sure.
-        # figure out if array are just being copied? why are runtimes so much quicker following
-    #-----------------------------------------------------------------------------
-    #print("\n***ARRAY TO BE SORTED BY MERGE SORT:", arrMerge)
-    tm0 = timer()
-    arrMerge = merge_sort(arrMerge)
-    tm = timer()
-    mergeTime = tm - tm0
-    #print("\nMerge Sorted Array:", arrMerge)
-    print("Sorting time for Merge Sort:", mergeTime, "seconds")
-    #-----------------------------------------------------------------------------
-    #/
-    #Quick sort commented out because of depth errors, must be addressed tomorrow.
-    tq0 = timer()
-    arrQuick = quickSort(arrQuick, 0, len(arrQuick) - 1)
-    tq = timer()
-    quickTime = tq - tq0
-    #print("\nQuick Sorted Array:", arrQuick)
-    print("Sorting time for Quick Sort:", quickTime, "seconds")
-    #\
-    #-----------------------------------------------------------------------------
-    th0 = timer()
-    arrHeap = heapSort(arrHeap)
-    th = timer()
-    heapTime = th - th0
-    #print("\nHeap Sorted Array:", arrHeap)
-    print("Sorting time for Heap Sort:", heapTime, "seconds.")
+        #these will be best cases
+    arrBubbleBest = copyArray(arr)
+    arrMergeBest = copyArray(arr)
+    arrQuickBest = copyArray(arr)
+        #these will be worst cases
+    arrBubbleWorst = copyArray(arr)
+    arrMergeWorst = copyArray(arr)
+    arrQuickWorst = copyArray(arr)
+        #best case for BUBBLE SORT is when the array is already sorted
+    arrBubbleBest = bubble_sort(arrBubbleBest)
+        #worst case for BUBBLE SORT i when the array is reverse SORTED
+    arrBubbleWorst = sorted(arrBubbleWorst, reverse=True)
 
+        #best, average, worst case for MERGE SORT are all the same
+        #asymptotic time complexity, so it can be skipped in that regard
+
+        #best case for QUICK SORT is when the array is already sorted
+    arrQuickBest = merge_sort(arrQuickBest)
+        #worst case for QUICK SORT is
+    arrQuickWorst = sorted(arrQuickWorst, reverse=True)
+
+        #best case for HEAP SORT is when all the elments are equal, so it gets
+        #a special array
+    arrHeapBest = []
+    num = random.randint(0, 200)
+    for x in range(numElements):
+        arrHeapBest.append(num)
+        #worst case for HEAP SORT is when all elements of an array are distinct!
+    arrHeapWorst = []
+    for x in range(numElements):
+        arrHeapWorst.append(x)
+    #-----------------------------------------------------------------------------
+    bubbleTimes.append(SortTimer(arrBubble, "Bubble"))
+    bubbleTimes.append(SortTimer(arrBubbleBest, "Bubble"))
+    bubbleTimes.append(SortTimer(arrBubbleWorst, "Bubble"))
+    #-----------------------------------------------------------------------------
+    mergeTimes.append(SortTimer(arrMerge, "Merge"))
+    #-----------------------------------------------------------------------------
+    #quickTimes.append(SortTimer(arrQuick, "Quick"))
+    #quickTimes.append(SortTimer(arrQuickBest, "Quick"))
+    #quickTimes.append(SortTimer(arrQuickWorst, "Quick"))
+    #-----------------------------------------------------------------------------
+    heapTimes.append(SortTimer(arrHeap, "Heap"))
+    heapTimes.append(SortTimer(arrHeapBest, "Heap"))
+    heapTimes.append(SortTimer(arrHeapWorst, "Heap"))
+    #-----------------------------------------------------------------------------
     file = open("output" + str(numElements) + ".txt", 'w')
 
-    file.write("BubbleSort time for " + str(numElements) + " elements: " + str(bubbleTime) + " seconds.")
-    file.write("\nMergeSort time for " + str(numElements) + " elements: " + str(mergeTime) + " seconds.")
-    file.write("\nQuickSort time for " + str(numElements) + " elements: " + str(quickTime) + "seconds.")
-    file.write("\nHeapSort time for " + str(numElements) + " elements: " + str(heapTime) + " seconds.")
+    file.write("Average Case BubbleSort time for " + str(numElements) + " elements: " + str(bubbleTimes[0]) + " seconds.")
+    file.write("\nBest Case BubbleSort time for " + str(numElements) + " elements: " + str(bubbleTimes[1]) + " seconds.")
+    file.write("\nWorst Case BubbleSort time for " + str(numElements) + " elements: " + str(bubbleTimes[2]) + " seconds.")
 
+    file.write("\n\nAverage, Best, and Worst Case MergeSort Time for " + str(numElements) + " elements: " + str(mergeTimes[0]) + " seconds.")
+
+    #file.write("\n\nAverage Case QuickSort time for " + str(numElements) + " elements: " + str(quickTimes[0]) + " seconds.")
+    #file.write("\n\nBest Case QuickSort time for " + str(numElements) + " elements: " + str(quickTimes[1]) + " seconds.")
+    #file.write("\n\nWorst Case QuickSort time for " + str(numElements) + " elements: " + str(quickTimes[2]) + " seconds.")
+
+    file.write("\n\nAverage Case HeapSort time for " + str(numElements) + " elements: " + str(heapTimes[0]) + " seconds.")
+    file.write("\nBest Case HeapSort time for " + str(numElements) + " elements: " + str(heapTimes[1]) + " seconds.")
+    file.write("\nWorst Case HeapSort time for " + str(numElements) + " elements: " + str(heapTimes[2]) + " seconds.")
     file.close()
-
+    #-----------------------------------------------------------------------------
 
 
 #this calls main for runtime
-main(10)
+#main(10)
 main(1000)
-main(10000)
+#main(10000)

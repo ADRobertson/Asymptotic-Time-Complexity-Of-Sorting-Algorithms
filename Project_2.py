@@ -144,22 +144,30 @@ def timer():
     t = time.perf_counter()
     return t
 
+#helper function to copy array without clogging up main...
+def copyArray(arr):
+    returnArray = []
+    for x in arr:
+        returnArray.append(x)
+    return returnArray
+
 # Driver code to test above
 
-def main():
-    numElem = 10000
+def main(numElements):
 
     #need 4 copies of a randomly generated array
 
     #loop to generate n element array of random integers
     arr = []
-    for x in range(numElem):
+    for x in range(numElements):
         int = random.randint(0, 200)
         arr.append(int)
-    arrBubble = arr
-    arrMerge = arr
-    arrQuick = arr
-    arrHeap = arr
+
+    #need function to automatically copy array wihout being pointers
+    arrBubble = copyArray(arr)
+    arrMerge = copyArray(arr)
+    arrQuick = copyArray(arr)
+    arrHeap = copyArray(arr)
     #print(arrBubble)
     #-----------------------------------------------------------------------------
     #array to be sent to bubbleSort
@@ -169,8 +177,16 @@ def main():
     #print("\nBubble Sorted Array:", arrBubble)
     bubbleTime = tbs - tbs0
     print("Sorting time for Bubble Sort:", bubbleTime, "seconds")
+    #print("\n***BUBBLE SORTED ARRAY:", arrBubble, "***")
     #print(arrMerge)
+
+    #to do list:
+        # average, best, worst case scanrios for sorts
+        # different number of elements
+        # fix quick sort, not really sure what's going on in that regard, will have to work through it tomorrow just to be sure.
+        # figure out if array are just being copied? why are runtimes so much quicker following
     #-----------------------------------------------------------------------------
+    #print("\n***ARRAY TO BE SORTED BY MERGE SORT:", arrMerge)
     tm0 = timer()
     arrMerge = merge_sort(arrMerge)
     tm = timer()
@@ -178,22 +194,35 @@ def main():
     #print("\nMerge Sorted Array:", arrMerge)
     print("Sorting time for Merge Sort:", mergeTime, "seconds")
     #-----------------------------------------------------------------------------
+    #/
+    #Quick sort commented out because of depth errors, must be addressed tomorrow.
     tq0 = timer()
     arrQuick = quickSort(arrQuick, 0, len(arrQuick) - 1)
     tq = timer()
     quickTime = tq - tq0
     #print("\nQuick Sorted Array:", arrQuick)
     print("Sorting time for Quick Sort:", quickTime, "seconds")
+    #\
     #-----------------------------------------------------------------------------
     th0 = timer()
     arrHeap = heapSort(arrHeap)
     th = timer()
     heapTime = th - th0
-    print("\nHeap Sorted Array:", arrHeap)
+    #print("\nHeap Sorted Array:", arrHeap)
     print("Sorting time for Heap Sort:", heapTime, "seconds.")
 
+    file = open("output" + str(numElements) + ".txt", 'w')
+
+    file.write("BubbleSort time for " + str(numElements) + " elements: " + str(bubbleTime) + " seconds.")
+    file.write("\nMergeSort time for " + str(numElements) + " elements: " + str(mergeTime) + " seconds.")
+    file.write("\nQuickSort time for " + str(numElements) + " elements: " + str(quickTime) + "seconds.")
+    file.write("\nHeapSort time for " + str(numElements) + " elements: " + str(heapTime) + " seconds.")
+
+    file.close()
 
 
 
 #this calls main for runtime
-main()
+main(10)
+main(1000)
+main(10000)

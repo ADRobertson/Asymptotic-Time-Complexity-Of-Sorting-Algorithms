@@ -1,5 +1,8 @@
 import random, time
+import sys
 
+sys.setrecursionlimit(3000)
+print("**THIS IS THE RECURSION DEPTH: ", sys.getrecursionlimit(), "**")
 
 #bubble sort algorithm
 def bubble_sort(arr):
@@ -95,6 +98,7 @@ def quickSort(array, low, high):
         # element smaller than pivot are on the left
         # element greater than pivot are on the right
         pi = partition(array, low, high)
+
 
         # Recursive call on the left of pivot
         quickSort(array, low, pi - 1)
@@ -233,16 +237,21 @@ def main(numElements):
     for x in range(numElements):
         arrHeapWorst.append(x)
     #-----------------------------------------------------------------------------
+    print("Running BubbleSort for", numElements, "elements...")
     bubbleTimes.append(SortTimer(arrBubble, "Bubble"))
     bubbleTimes.append(SortTimer(arrBubbleBest, "Bubble"))
     bubbleTimes.append(SortTimer(arrBubbleWorst, "Bubble"))
     #-----------------------------------------------------------------------------
+    print("Running MergeSort for", numElements, "elements...")
     mergeTimes.append(SortTimer(arrMerge, "Merge"))
     #-----------------------------------------------------------------------------
-    #quickTimes.append(SortTimer(arrQuick, "Quick"))
-    #quickTimes.append(SortTimer(arrQuickBest, "Quick"))
-    #quickTimes.append(SortTimer(arrQuickWorst, "Quick"))
+    if numElements <= 1000:
+        print("Running QuickSort for", numElements, "elements...")
+        quickTimes.append(SortTimer(arrQuick, "Quick"))
+        quickTimes.append(SortTimer(arrQuickBest, "Quick"))
+        quickTimes.append(SortTimer(arrQuickWorst, "Quick"))
     #-----------------------------------------------------------------------------
+    print("Running HeapSort for", numElements, "elements...")
     heapTimes.append(SortTimer(arrHeap, "Heap"))
     heapTimes.append(SortTimer(arrHeapBest, "Heap"))
     heapTimes.append(SortTimer(arrHeapWorst, "Heap"))
@@ -255,9 +264,10 @@ def main(numElements):
 
     file.write("\n\nAverage, Best, and Worst Case MergeSort Time for " + str(numElements) + " elements: " + str(mergeTimes[0]) + " seconds.")
 
-    #file.write("\n\nAverage Case QuickSort time for " + str(numElements) + " elements: " + str(quickTimes[0]) + " seconds.")
-    #file.write("\n\nBest Case QuickSort time for " + str(numElements) + " elements: " + str(quickTimes[1]) + " seconds.")
-    #file.write("\n\nWorst Case QuickSort time for " + str(numElements) + " elements: " + str(quickTimes[2]) + " seconds.")
+    if numElements <= 1000:
+        file.write("\nAverage Case QuickSort time for " + str(numElements) + " elements: " + str(quickTimes[0]) + " seconds.")
+        file.write("\nBest Case QuickSort time for " + str(numElements) + " elements: " + str(quickTimes[1]) + " seconds.")
+        file.write("\nWorst Case QuickSort time for " + str(numElements) + " elements: " + str(quickTimes[2]) + " seconds.")
 
     file.write("\n\nAverage Case HeapSort time for " + str(numElements) + " elements: " + str(heapTimes[0]) + " seconds.")
     file.write("\nBest Case HeapSort time for " + str(numElements) + " elements: " + str(heapTimes[1]) + " seconds.")
@@ -267,6 +277,7 @@ def main(numElements):
 
 
 #this calls main for runtime
-#main(10)
+main(100)
 main(1000)
-#main(10000)
+main(10000)
+main(100000)

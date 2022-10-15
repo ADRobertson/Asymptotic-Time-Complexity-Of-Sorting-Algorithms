@@ -1,0 +1,9 @@
+Average Case BubbleSort time for 10000 elements: 6.10838119999994 seconds.
+Best Case BubbleSort time for 10000 elements: 0.0005739000000630767 seconds.
+Worst Case BubbleSort time for 10000 elements: 8.928797000000031 seconds.
+
+Average, Best, and Worst Case MergeSort Time for 10000 elements: 0.026991499999894586 seconds.
+
+Average Case HeapSort time for 10000 elements: 0.040482099999962884 seconds.
+Best Case HeapSort time for 10000 elements: 0.004267299999810348 seconds.
+Worst Case HeapSort time for 10000 elements: 0.042613200000005236 seconds.

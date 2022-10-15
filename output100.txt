@@ -1,0 +1,12 @@
+Average Case BubbleSort time for 100 elements: 0.0005897999999433523 seconds.
+Best Case BubbleSort time for 100 elements: 5.599999894911889e-06 seconds.
+Worst Case BubbleSort time for 100 elements: 0.0008075999999164196 seconds.
+
+Average, Best, and Worst Case MergeSort Time for 100 elements: 0.00019780000002356246 seconds.
+Average Case QuickSort time for 100 elements: 8.40999998672487e-05 seconds.
+Best Case QuickSort time for 100 elements: 0.0005810000000110449 seconds.
+Worst Case QuickSort time for 100 elements: 0.0002842999999757012 seconds.
+
+Average Case HeapSort time for 100 elements: 0.00018369999997958075 seconds.
+Best Case HeapSort time for 100 elements: 4.1300000020783045e-05 seconds.
+Worst Case HeapSort time for 100 elements: 0.00019959999985985633 seconds.
